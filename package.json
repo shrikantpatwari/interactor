@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/shrikantpatwari/interactor/issues"
   },
-  "homepage": "https://github.com/shrikantpatwari/interactor"
+  "homepage": "https://github.com/shrikantpatwari/interactor",
+  "dependencies": {
+    "uglify": "^0.1.5"
+  }
 }

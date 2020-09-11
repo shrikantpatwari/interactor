@@ -416,14 +416,8 @@
             // Add Interaction Object Triggered By Events to Records Array
             __sendUserAction__: function (e, type) {
 
-                var interactor = this,
-                    xhr = new XMLHttpRequest();
-
-                // Post Session Data Serialized as JSON
-                xhr.open('POST', interactor.endpoint, interactor.async);
-                xhr.setRequestHeader('Content-Type', 'text/plain; charset=UTF-8');
-                xhr.withCredentials = true;
-                xhr.send(JSON.stringify({
+                var interactor = this;
+                navigator.sendBeacon(interactor.endpoint, JSON.stringify({
                     "channel": "web",
                     "type": type,
                     "timestamp": new Date().toISOString(),
@@ -434,6 +428,11 @@
                         targetTag: e.target.nodeName,
                         targetClasses: e.target.className,
                         content: e.target.innerText,
+                        page_path: window.location.pathname,
+                        page_url: window.location.href,
+                        page_origin: window.location.origin,
+                        page_title: document.title,
+                        page_referrer: document.referrer,
                         createdAt: new Date().toISOString()
                     }
                 }));
@@ -508,18 +507,12 @@
             __sendPageUnload__: function () {
 
                 var interactor = this;
-                    // Initialize Cross Header Request
+                // Initialize Cross Header Request
 
                 // Close Session
                 interactor.__closeSession__();
 
                 navigator.sendBeacon(interactor.endpoint, JSON.stringify(interactor.session));
-                // Post Session Data Serialized as JSON
-                // xhr.open('POST', interactor.endpoint, interactor.async);
-                // xhr.setRequestHeader('Content-Type', 'text/plain; charset=UTF-8');
-                // xhr.withCredentials = true;
-                // xhr.send(JSON.stringify(interactor.session));
-
                 return interactor;
             },
 
